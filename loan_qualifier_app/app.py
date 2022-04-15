@@ -109,7 +109,35 @@ def save_qualifying_loans(qualifying_loans):
         qualifying_loans (list of lists): The qualifying bank loans.
     """
     # @TODO: Complete the usability dialog for savings the CSV Files.
-    # YOUR CODE HERE!
+    #Ask if the user wants to save the file
+    question = questionary.confirm("Would you like to save the new file?").ask()
+
+    if question == False:
+        print("")
+        print("Thank you for using the app. Goodbye!")
+        quit()
+    else:
+        # Enter the new file name to be saved by the application
+        name = questionary.text("""Enter the new file name by following these rules:
+        1. Use lowercase letters
+        2. Don't leave empty spaces between words.
+        3. Use the underscore _ as a separator.
+        4. Include .csv at the end of the name.
+        5. For example: john_doe.csv"""
+        ).ask()
+
+        if name == "":
+            print("")
+            print("You must enter a file name")
+            print("")
+            save_qualifying_loans(qualifying_loans)
+        if len(qualifying_loans) == 0:
+            output_path = Path(f"results/unqualified_loans/{name.lower()}")
+            save_csv(output_path, qualifying_loans)
+        else:
+            output_path = Path(f"results/qualified_loans/{name.lower()}")
+            save_csv(output_path, qualifying_loans)
+
 
 
 def run():
