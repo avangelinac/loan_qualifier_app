@@ -37,7 +37,7 @@ python app.py
 ### The program creates a loan qualifier application. 
 
 
-![Example Input](loan_qualifier_app_ex.png)
+![Example Input](images/loan_qualifier_app_ex.png)
 
 ### The program creates a list of qualifying loans based on user input. The user will then be prompted to save the file:
 
