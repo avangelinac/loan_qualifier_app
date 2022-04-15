@@ -1,33 +1,75 @@
-# Project Title
+# Loan Qualifier CSV
 
-Just after the title, introduce your project by describing attractively what the project is about and what is the main problem that inspires you to create this project or what is the main contribution for the potential user of your project.
+This program will create a list of qualifying loans given user input and save the results to a csv file.
 
 ---
 
 ## Technologies
 
-Describe the technologies required to use your project such as programming languages, libraries, frameworks, and operating systems. Be sure to include the specific versions of any critical dependencies that you have used in the stable version of your project.
+Code is written using Python version 3.8.1
+The following libraries are required to run app.py:
+
+```python
+import sys
+import fire
+import questionary
+from pathlib import Path
+```
 
 ---
 
 ## Installation Guide
 
-In this section, you should include detailed installation notes containing code blocks and screenshots.
+Using the command prompt, navigate to an empty folder where you would like to install the files and type the command:
+
+```
+git clone https://github.com/avangelinac/loan_qualifier_app.git
+```
+Then, to run the app type:
+```
+python app.py
+```
+
+---
+
+## Screenshots
+
+### The program creates a loan qualifier application. 
+
+
+![Example Input](loan_qualifier_app_ex.png)
+
+### The program creates a list of qualifying loans based on user input. The user will then be prompted to save the file:
+
+
+![Example Input](images/ex_output_2.png)
+
+### If the user input results in no qualifying loans, the program will exit without prompting to save:
+
+
+![Example Input](images/ex_output_1.png)
+
 
 ---
 
 ## Usage
 
-This section should include screenshots, code blocks, or animations explaining how to use your project.
+The app runs using the Command Line Interface. The user is prompted to enter a file path to a rate-sheet .csv file. The default file path is:
+```
+data/daily_rate_sheet.csv
+```
+Then, the user is prompted to enter values for their credit score, current amount of monthly debt, total monthly income, desired loan amount, and home value.
+
+If the program generates a list of qualified loans, the user is prompted to save the file and the output is saved in the data/output folder.
 
 ---
 
 ## Contributors
 
-In this section, list all the people who contribute to this project. You might want recruiters or potential collaborators to reach you, so include your contact email and, optionally, your LinkedIn or Twitter profile.
+Avangelina Cazares
 
 ---
 
 ## License
 
-When you share a project on a repository, especially a public one, it's important to choose the right license to specify what others can and can't with your source code and files. Use this section to include the license you want to use.
+Not licensed. 

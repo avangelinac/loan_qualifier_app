@@ -11,7 +11,7 @@ import fire
 import questionary
 from pathlib import Path
 
-from qualifier.utils.fileio import load_csv
+from qualifier.utils.fileio import (load_csv, save_csv)
 
 from qualifier.utils.calculators import (
     calculate_monthly_debt_ratio,
@@ -32,6 +32,7 @@ def load_bank_data():
     """
 
     csvpath = questionary.text("Enter a file path to a rate-sheet (.csv):").ask()
+    # Default path is "data/daily_rate_sheet.csv"
     csvpath = Path(csvpath)
     if not csvpath.exists():
         sys.exit(f"Oops! Can't find this path: {csvpath}")
@@ -46,17 +47,11 @@ def get_applicant_info():
         Returns the applicant's financial information.
     """
 
-    credit_score = questionary.text("What's your credit score?").ask()
-    debt = questionary.text("What's your current amount of monthly debt?").ask()
-    income = questionary.text("What's your total monthly income?").ask()
-    loan_amount = questionary.text("What's your desired loan amount?").ask()
-    home_value = questionary.text("What's your home value?").ask()
-
-    credit_score = int(credit_score)
-    debt = float(debt)
-    income = float(income)
-    loan_amount = float(loan_amount)
-    home_value = float(home_value)
+    credit_score = int(questionary.text("What's your credit score?").ask())
+    debt = float(questionary.text("What's your current amount of monthly debt?").ask())
+    income = float(questionary.text("What's your total monthly income?").ask())
+    loan_amount = float(questionary.text("What's your desired loan amount?").ask())
+    home_value = float(questionary.text("What's your home value?").ask())
 
     return credit_score, debt, income, loan_amount, home_value
 
@@ -108,36 +103,11 @@ def save_qualifying_loans(qualifying_loans):
     Args:
         qualifying_loans (list of lists): The qualifying bank loans.
     """
-    # @TODO: Complete the usability dialog for savings the CSV Files.
-    #Ask if the user wants to save the file
-    question = questionary.confirm("Would you like to save the new file?").ask()
-
-    if question == False:
-        print("")
-        print("Thank you for using the app. Goodbye!")
-        quit()
-    else:
-        # Enter the new file name to be saved by the application
-        name = questionary.text("""Enter the new file name by following these rules:
-        1. Use lowercase letters
-        2. Don't leave empty spaces between words.
-        3. Use the underscore _ as a separator.
-        4. Include .csv at the end of the name.
-        5. For example: john_doe.csv"""
-        ).ask()
-
-        if name == "":
-            print("")
-            print("You must enter a file name")
-            print("")
-            save_qualifying_loans(qualifying_loans)
-        if len(qualifying_loans) == 0:
-            output_path = Path(f"results/unqualified_loans/{name.lower()}")
-            save_csv(output_path, qualifying_loans)
-        else:
-            output_path = Path(f"results/qualified_loans/{name.lower()}")
-            save_csv(output_path, qualifying_loans)
-
+    if questionary.confirm("Would you like to save the file?").ask():
+        filename = questionary.text("Enter the filename to save:").ask()
+        filepath = 'data/output/' + filename
+        save_csv(filepath, qualifying_loans)
+        print(f"File {filename} saved to the data/output folder.")
 
 
 def run():
@@ -154,8 +124,9 @@ def run():
         bank_data, credit_score, debt, income, loan_amount, home_value
     )
 
-    # Save qualifying loans
-    save_qualifying_loans(qualifying_loans)
+    # Save qualifying loans (if the list is not empty)
+    if len(qualifying_loans) != 0:
+        save_qualifying_loans(qualifying_loans)
 
 
 if __name__ == "__main__":
