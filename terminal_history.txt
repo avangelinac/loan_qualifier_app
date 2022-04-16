@@ -1,0 +1,8 @@
+  176  git clone https://github.com/avangelinac/loan_qualifier_app.git
+  177  ls
+  178  cd loan_qualifier_app
+  179  git add .
+  180  git commit -m "commit"
+  181  git push origin main
+  182  cd ..
+  183  history 8 > terminal_history.txt
